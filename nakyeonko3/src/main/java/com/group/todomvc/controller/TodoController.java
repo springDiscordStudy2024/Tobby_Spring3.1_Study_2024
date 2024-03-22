@@ -1,15 +1,14 @@
 package com.group.todomvc.controller;
 
-import com.group.dto.ToDoSaveRequest;
+import com.group.todomvc.dto.ToDoGetAllResponse;
+import com.group.todomvc.dto.ToDoSaveRequest;
 import com.group.todomvc.service.TodoService;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("/api/v1/todo")
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/todos")
 public class TodoController {
     private final TodoService todoService;
 
@@ -17,9 +16,27 @@ public class TodoController {
         this.todoService = todoService;
     }
 
-    @GetMapping
-    public void addTodo(@RequestBody ToDoSaveRequest request) {
-        System.out.println(request.getMessage() + ":" + request.getToday());
+    @GetMapping("/test")
+    public String greeting() {
+        return "Hello, World";
+    }
+    @PostMapping
+    public void saveTodo(@RequestBody ToDoSaveRequest request) {
+        todoService.saveTodo(request);
     }
 
+    @GetMapping("/list")
+    public List<ToDoGetAllResponse> getAll(){
+        return todoService.getAll();
+    }
+
+    @PutMapping()
+    public void updateTodo(@RequestParam long id){
+        todoService.updateTodo(id);
+    }
+
+    @DeleteMapping()
+    public void deleteTodo(@RequestParam long id){
+        todoService.deleteTodo(id);
+    }
 }
