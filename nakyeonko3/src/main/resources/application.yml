@@ -1,0 +1,43 @@
+
+spring:
+  application:
+    name: todomvc
+  config:
+    activate:
+      on-profile: local_h2
+  datasource:
+    url: "jdbc:h2:mem:todomvc;MODE=MYSQL;"
+    username: "sa"
+    password: ""
+    driver-class-name: org.h2.Driver
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: none
+        show_sql: true
+        format_sql: true
+server:
+  port: 18080
+---
+spring:
+  application:
+    name: todomvc
+  config:
+    activate:
+      on-profile: local_mysql
+  datasource:
+    url: "jdbc:mysql://localhost/todomvc"
+    username: "root"
+    password: ""
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+server:
+  port: 18080
+---
